@@ -1,0 +1,48 @@
+{
+    "name": "members-only",
+    "version": "1.0.0",
+    "description": "Private clubhouse application that lets users create an account, create posts, be a memmber or an admin. The project built based on instructions from The Odin Project course. Link to the instructions: https://www.theodinproject.com/lessons/node-path-nodejs-members-only ",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "init-db": "node db/init-db.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.2",
+        "dotenv": "^16.5.0",
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "express-async-handler": "^1.2.0",
+        "express-session": "^1.18.1",
+        "express-validator": "^7.2.1",
+        "nodemon": "^3.1.10",
+        "passport": "^0.7.0",
+        "passport-local": "^1.0.0",
+        "pg": "^8.15.6"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/heydarov93/Members-Only.git"
+    },
+    "keywords": [
+        "Javascript",
+        "ExpressJS",
+        "NodeJS",
+        "PassportJS",
+        "PostgreSQL",
+        "EJS",
+        "Express-Validator",
+        "Authentication",
+        "Authorization",
+        "Express-Session",
+        "BcryptJS",
+        "Session"
+    ],
+    "author": "Yashar Heydarov",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/heydarov93/Members-Only/issues"
+    },
+    "homepage": "https://github.com/heydarov93/Members-Only#readme"
+}
