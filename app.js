@@ -4,6 +4,10 @@ const indexRouter = require("./routes/index-router");
 const usersRouter = require("./routes/users-router");
 const postsRouter = require("./routes/posts-router");
 const authRouter = require("./routes/auth-router");
+const setNotification = require("./middlewares/set-notification");
+const passport = require("passport");
+const session = require("express-session");
+require("./config/passport");
 require("dotenv").config();
 
 const app = express();
@@ -18,8 +22,31 @@ app.set("view engine", "ejs");
 const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 
+// Use sessions
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+app.use(passport.session());
+
+// Temporary code for development purposes
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
+
 // Allow express to use form data (extended: true lets to parse nested objects)
 app.use(express.urlencoded({ extended: true }));
+
+// Set user-friendly notification messages
+app.use(setNotification);
 
 // Routes
 app.use("/auth", authRouter);
