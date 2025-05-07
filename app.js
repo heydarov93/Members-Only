@@ -7,6 +7,9 @@ const authRouter = require("./routes/auth-router");
 const setNotification = require("./middlewares/set-notification");
 const passport = require("passport");
 const session = require("express-session");
+const pool = require("./config/database");
+const { setCurrentUser } = require("./middlewares/set-current-user");
+const pgSessionStore = require("connect-pg-simple")(session);
 require("./config/passport");
 require("dotenv").config();
 
@@ -25,6 +28,11 @@ app.use(express.static(assetsPath));
 // Use sessions
 app.use(
   session({
+    store: new pgSessionStore({
+      pool: pool,
+      tableName: "user_sessions",
+      createTableIfMissing: true,
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -35,18 +43,21 @@ app.use(
 );
 app.use(passport.session());
 
-// Temporary code for development purposes
-app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user);
-  next();
-});
+// Set current user for views
+app.use(setCurrentUser);
 
 // Allow express to use form data (extended: true lets to parse nested objects)
 app.use(express.urlencoded({ extended: true }));
 
 // Set user-friendly notification messages
 app.use(setNotification);
+
+// Temporary code for develoment
+// app.use((req, res, next) => {
+//   console.log(req.user);
+//   console.log(req.session);
+//   next();
+// });
 
 // Routes
 app.use("/auth", authRouter);
