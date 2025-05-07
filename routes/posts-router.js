@@ -1,15 +1,17 @@
 const { Router } = require("express");
+const postsController = require("../controllers/posts-controller");
+const { isAuth } = require("../middlewares/auth-middlewares");
 
 const router = Router();
 
 // Show all posts
-router.get("/", (req, res) => res.send("All posts"));
+router.get("/", postsController.showAllPosts);
 
 // Show create post form
-router.get("/create", (req, res) => res.send("Create post form"));
+router.get("/create", isAuth, postsController.showCreatePostForm);
 
 // Create a post
-router.post("/create", (req, res) => res.send("Post created"));
+router.post("/create", isAuth, postsController.createPost);
 
 // Show update post form
 router.get("/update/:id", (req, res) =>
