@@ -4,6 +4,10 @@ const notificationMessages = {
     fail: "Something went wrong during sign up. Please try again.",
     success: "Sign up successful! You can now log in.",
   },
+  createPost: {
+    fail: "Something went wrong while submitting the post. Please try again.",
+    success: "The post was created successfully.",
+  },
 };
 
 function setNotification(req, res, next) {
