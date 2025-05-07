@@ -3,6 +3,7 @@ const { validationResult } = require("express-validator");
 const db = require("../db/queries");
 const { genPassword } = require("../utils/password-utils");
 const passport = require("passport");
+const { logoutPromise } = require("../utils/auth-utils");
 require("../config/passport");
 
 // Display signup form
@@ -56,9 +57,16 @@ const login = passport.authenticate("local", {
   successRedirect: "/",
 });
 
+// Logout post controller
+const logout = asyncHandler(async (req, res) => {
+  await logoutPromise(req);
+  res.redirect("/");
+});
+
 module.exports = {
   showSignupForm,
   signup,
   showLoginForm,
   login,
+  logout,
 };
