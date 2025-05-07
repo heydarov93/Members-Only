@@ -41,9 +41,9 @@ passport.deserializeUser(async (id, done) => {
   try {
     const rows = await db.getUserById(id);
 
-    const user = rows[0];
+    const { first_name, last_name, email, is_member, is_admin } = rows[0];
 
-    done(null, user);
+    done(null, { id, first_name, last_name, email, is_member, is_admin });
   } catch (error) {
     done(error);
   }
