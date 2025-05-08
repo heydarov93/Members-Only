@@ -1,6 +1,7 @@
 class CustomUnauthorizedError extends Error {
-  constructor(message) {
+  constructor(message = "Unauthorized") {
     super(message);
+    this.name = "CustomUnauthorizedError";
     this.statusCode = 401;
   }
 }
