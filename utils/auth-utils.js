@@ -4,4 +4,8 @@ const logoutPromise = util.promisify((req, callback) => {
   req.logout(callback);
 });
 
-module.exports = { logoutPromise };
+const isOwner = (ownerId, userId) => {
+  return ownerId === userId;
+};
+
+module.exports = { logoutPromise, isOwner };
