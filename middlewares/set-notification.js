@@ -8,16 +8,29 @@ const notificationMessages = {
     fail: "Something went wrong while submitting the post. Please try again.",
     success: "The post was created successfully.",
   },
+  updatePost: {
+    fail: "Something went wrong while updating the post. Please try again.",
+    success: "The post was updated successfully.",
+  },
+  deletePost: {
+    fail: "Something went wrong while deleting the post. Please try again.",
+    success: "The post was deleted successfully.",
+  },
+  grantRole: {
+    fail: "Something went wrong while granting the role. Please try again.",
+    success: "The role was granted successfully.",
+  },
 };
 
 function setNotification(req, res, next) {
   for (const key in notificationMessages) {
-    const value = req.query[key];
-    if (value && notificationMessages[key][value]) {
-      res.locals.notification = notificationMessages[key][value];
+    const status = req.query[key];
+    if (status && notificationMessages[key][status]) {
+      res.locals.notification = notificationMessages[key][status];
 
-      // value = success/fail
-      res.locals.status = value;
+      res.locals.status = status; // success or fail
+      console.log(`${key}: ${res.locals.notification}`);
+      break;
     }
   }
   next();
