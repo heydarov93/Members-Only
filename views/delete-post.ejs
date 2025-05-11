@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Post</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body>
+  <!-- Notification -->
+  <% if (locals.notification) { %>
+  <div class="alert alert-<%= locals.status === 'success' ? 'success' : 'danger' %> alert-dismissible text-center fade show" role="alert">
+    <%=  locals.notification %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% } %>
+  <!-- Notification END -->
+  <div class="mb-3">
+    <div>
+      <h3><%= post.title %></h3>
+      <p>Author: <%= `${post.first_name} ${post.last_name}` %></p>
+      <time datetime="<%= post.created_at %>"><%= formatDate(post.created_at) %></time>
+    </div>
+  </div>
+  <!-- Form -->
+  <form action="/posts/delete/<%= locals.post.id %>" method="post">
+    <div>
+      <button type="submit">Delete post</button>
+    </div>
+    <div>
+      <a class="btn btn-light" href="/">Cancel</a>
+    </div>
+  </form>
+  <!-- Form END -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+
+</html>
