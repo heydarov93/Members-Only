@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const postsController = require("../controllers/posts-controller");
-const { isAuth } = require("../middlewares/auth-middlewares");
+const { isAuth, isAdmin } = require("../middlewares/auth-middlewares");
+const {
+  validatePostSubmission,
+  validatePostParams,
+} = require("../middlewares/validate-post");
 
 const router = Router();
 
@@ -11,26 +15,44 @@ router.get("/", postsController.showAllPosts);
 router.get("/create", isAuth, postsController.showCreatePostForm);
 
 // Create a post
-router.post("/create", isAuth, postsController.createPost);
+router.post(
+  "/create",
+  isAuth,
+  validatePostSubmission,
+  postsController.createPost
+);
 
 // Show update post form
-router.get("/update/:id", (req, res) =>
-  res.send("Update post form: ", req.params.id)
+router.get(
+  "/update/:id",
+  isAuth,
+  validatePostParams,
+  postsController.showUpdatePostForm
 );
 
 // Update a post
-router.post("/update/:id", (req, res) =>
-  res.send("Post updated: ", req.params.id)
+router.post(
+  "/update/:id",
+  isAuth,
+  validatePostParams,
+  validatePostSubmission,
+  postsController.updatePost
 );
 
 // Show delete post form
-router.get("/delete/:id", (req, res) =>
-  res.send("Delete post form: ", req.params.id)
+router.get(
+  "/delete/:id",
+  isAuth,
+  validatePostParams,
+  postsController.showDeletePostForm
 );
 
 // Delete a post
-router.post("/delete/:id", (req, res) =>
-  res.send("Post deleted: ", req.params.id)
+router.post(
+  "/delete/:id",
+  isAuth,
+  validatePostParams,
+  postsController.deletePost
 );
 
 module.exports = router;
