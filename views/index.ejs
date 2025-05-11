@@ -20,6 +20,7 @@
 
   <% if (currentUser?.first_name) { %>
   <h1>Hello, <%= currentUser.first_name %></h1>
+  <a href="/users/profile">Profile</a>
 
   <form action="/auth/logout" method="post">
     <input type="submit" value="Logout">
@@ -35,7 +36,21 @@
     <% posts.forEach(post => { %>
     <div class="mb-3">
       <h3><%= post.title %></h3>
+      <% if (currentUser?.is_member) { %>
+      <p><strong>Author: </strong><%= `${post.first_name} ${post.last_name}` %></p>
+      <p><strong>Posted: </strong><%= formatDate(post.created_at) %></p>
+      <% } %>
       <p><%= post.content %></p>
+
+      <% if (post.user_id === currentUser?.id) { %>
+      <!-- Only the member of a post can see edit button -->
+      <a class="btn btn-success" href="/posts/update/<%= post.id %>">Edit</a>
+      <% } %>
+
+      <% if (currentUser?.is_admin || post.user_id === currentUser?.id) { %>
+      <!-- Show delete button to admins and to owner of a post -->
+      <a class="btn btn-danger" href="/posts/delete/<%= post.id %>">Delete</a>
+      <% } %>
     </div>
     <% }) %>
   </div>
