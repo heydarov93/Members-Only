@@ -1,0 +1,69 @@
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Font-size */
+.c-fs-12 {
+  font-size: 0.75rem; /* 12px */
+}
+
+.c-fs-14 {
+  font-size: 0.875rem; /* 14px */
+}
+
+.c-fs-56 {
+  font-size: 3.5rem; /* 56px */
+}
+
+/* Width */
+.c-max-w-700 {
+  max-width: 700px;
+}
+
+/* Height */
+.c-h-400 {
+  height: 400px;
+}
+
+.c-btn-cta:hover {
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc,
+    0 0 40px #00ffcc, 0 0 50px #00ffcc;
+}
+
+/* Background */
+.c-bg-success-1 {
+  background: #004f4f !important; /* A lighter teal color to complement the dark background */
+}
+
+.c-bg-gradient-1 {
+  background: #485563; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #29323c,
+    #485563
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #29323c,
+    #485563
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+@media (min-width: 48em) {
+  .c-w-md-50 {
+    width: 50% !important;
+  }
+}
+
+/* Padding */
+.c-pb-64 {
+  padding-bottom: 4rem !important; /* 64px */
+}
+
+/* Button */
+
+.c-cursor-default {
+  cursor: default !important;
+}
