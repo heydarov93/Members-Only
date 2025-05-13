@@ -1,0 +1,22 @@
+<!-- Header -->
+<%- include("partials/header", {title: post.title}) %>
+<!-- Header END -->
+<main id="main">
+  <article class="container-lg pt-5 c-pb-64 c-max-w-700">
+    <h2 class="mb-5"><%= post.title %></h2>
+    <div class="border rounded-4 p-3 bg-dark-subtle h-100 overflow-hidden d-flex flex-column gap-5 justify-content-between shadow">
+      <div>
+        <% if (currentUser?.is_member) { %>
+        <p class="text-white-50 c-fs-14 m-0 mb-1 d-flex gap-2 align-items-center"><i class="bi bi-pen-fill"></i><%= `${post.first_name} ${post.last_name}` %></p>
+        <p class="text-white-50 c-fs-14 m-0 mb-3 d-flex gap-2 align-items-center"><i class="bi bi-calendar3"></i><%= formatDate(post.created_at) %></p>
+        <% } %>
+        <p class="text-body-secondary"><%= post.content %></p>
+      </div>
+    </div>
+    </div>
+  </article>
+</main>
+
+<!-- Footer -->
+<%- include("partials/footer") %>
+<!-- Footer END -->
