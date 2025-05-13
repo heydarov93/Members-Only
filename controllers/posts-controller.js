@@ -60,25 +60,7 @@ const createPost = asyncHandler(async (req, res) => {
 
 /* ======================== */
 // Display update post form
-const showUpdatePostForm = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-
-  // Get validation results for req.params.id
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    // If id is invalid just throw 404
-    throw new CustomNotFoundError(errors.errors[0].msg);
-  }
-
-  // If no error get post
-  const post = await db.getPostById(id);
-
-  // If no post for an entered id or if current user is not the owner of the post throw 404
-  if (!post || !isOwner(post.user_id, req.user.id)) {
-    throw new CustomNotFoundError("Post not found!");
-  }
-
+const showUpdatePostForm = (req, res) => {
   // If the post submission process fails, form values are stored in the session
   // This prevents the user from losing their input — a better user experience
   if (req.session.formValues) {
@@ -90,42 +72,27 @@ const showUpdatePostForm = asyncHandler(async (req, res) => {
     return res.render("post-form");
   }
 
-  res.render("post-form", { post });
-});
+  res.render("post-form", { post: req.post });
+};
 
 /* ======================== */
 // Update a post
 const updatePost = asyncHandler(async (req, res) => {
   const { title, content } = req.body;
-  const { id } = req.params;
 
   // Get validation errors, if any
   const errors = validationResult(req);
 
   // If there is an error, render create post form page with user entered data and error messages
   if (!errors.isEmpty()) {
-    // Errors contain both params and body related errors, so get params.id error to display appropriate error message
-    const invalidIdError = errors.errors.find(
-      (error) => error.location === "params"
-    );
-
-    if (invalidIdError) throw new CustomNotFoundError(invalidIdError.msg);
-
     return res.render("post-form", {
       errors: errors.errors,
-      post: { id, title, content },
+      post: { id: req.post.id, title, content },
     });
   }
 
-  // Fetch post and get author id
-  const { user_id } = await db.getPostById(id);
-
-  // Check if current user is the owner of the post
-  if (!isOwner(user_id, req.user.id))
-    throw new CustomNotFoundError("Post not found!");
-
   const updatedPostId = await db.updatePost({
-    id,
+    id: req.post.id,
     title,
     content,
   });
@@ -133,7 +100,7 @@ const updatePost = asyncHandler(async (req, res) => {
   // If updating post failed, redirect user to update post page and set update post status to fail
   if (!updatedPostId) {
     req.session.formValues = { title, content };
-    return res.redirect(`/posts/update/${id}?updatePost=fail`);
+    return res.redirect(`/posts/update/${req.post.id}?updatePost=fail`);
   }
 
   // If post updated successfully, redirect user to home page and set update post status to success
@@ -143,53 +110,17 @@ const updatePost = asyncHandler(async (req, res) => {
 /* ======================== */
 // Display delete post form
 const showDeletePostForm = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-
-  // Get validation results for req.params.id
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    // If id is invalid just throw 404
-    throw new CustomNotFoundError(errors.errors[0].msg);
-  }
-
-  // If no error get post
-  const post = await db.getPostById(id);
-
-  // If no post for an entered id or if current user is not the owner of the post or if user is not an admin throw 404
-  if (!post || !(isOwner(post.user_id, req.user.id) || req.user.is_admin)) {
-    throw new CustomNotFoundError("Post not found!");
-  }
-
-  res.render("delete-post", { post, formatDate });
+  res.render("delete-post", { post: req.post, formatDate });
 });
 
 /* ======================== */
 // Delete post
 const deletePost = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-
-  // Get validation results for req.params.id
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    // If id is invalid just throw 404
-    throw new CustomNotFoundError(errors.errors[0].msg);
-  }
-
-  // If no error get post
-  const post = await db.getPostById(id);
-
-  // If no post for an entered id or if current user is not the owner of the post or if user is not an admin throw 404
-  if (!post || !(isOwner(post.user_id, req.user.id) || req.user.is_admin)) {
-    throw new CustomNotFoundError("Post not found!");
-  }
-
-  const deletePostId = await db.deletePost(id);
+  const deletePostId = await db.deletePost(req.post.id);
 
   // If deleting post failed, redirect user to delete post page and set update post status to fail
   if (!deletePostId) {
-    return res.redirect(`/posts/delete/${id}?deletePost=fail`);
+    return res.redirect(`/posts/delete/${req.post.id}?deletePost=fail`);
   }
 
   // If post deleted successfully, redirect user to home page and set delete post status to success
