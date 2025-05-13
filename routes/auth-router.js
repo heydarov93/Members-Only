@@ -7,7 +7,7 @@ const router = Router();
 
 // Signup
 router.get("/signup", isNotAuth, authController.showSignupForm);
-router.post("/signup", validateSignup, authController.signup);
+router.post("/signup", isNotAuth, validateSignup, authController.signup);
 
 // Login
 router.get("/login", isNotAuth, authController.showLoginForm);
