@@ -1,7 +1,7 @@
-<div class="text-danger">
+<div class="text-danger mt-2">
   <% locals.errors?.forEach(err => {
       if (err.path === input_name) { %>
-  <%= err.msg %><br>
+  <i class="bi bi-info-circle me-2 mb-1"></i><%= err.msg %><br>
   <% }
     }) %>
 </div>

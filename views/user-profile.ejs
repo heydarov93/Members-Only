@@ -1,60 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Header -->
+<%- include("partials/header", {title: `${currentUser.first_name} ${currentUser.last_name}`}) %>
+<!-- Header END -->
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= `${currentUser.first_name} ${currentUser.last_name}` %></title>
+<main id="main">
+  <article class="container-sm p-sm-5">
+    <!-- Form -->
+    <h2 class="display-2 mb-5"><%= `${currentUser.first_name} ${currentUser.last_name}` %></h2>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-</head>
 
-<body>
-  <% if (locals.notification) { %>
-  <div class="alert alert-<%= locals.status === 'success' ? 'success' : 'danger' %> alert-dismissible text-center fade show" role="alert">
-    <%=  locals.notification %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  <% } %>
-
-  <h1><%= `${currentUser.first_name} ${currentUser.last_name}` %></h1>
-  <div><strong>Email: </strong><%= currentUser.email %></p>
-    <div>
-      <% if (currentUser.is_admin) { %>
-      <span class="p-1 rounded-3 bg-dark text-white">Admin</span>
-      <% } %>
-      <% if (currentUser.is_admin || currentUser.is_member) { %>
-      <span class="p-1 rounded-3 bg-dark-subtle">Member</span>
-      <% } %>
+    <div class="mb-5">
+      <strong>Email: </strong><%= currentUser.email %></p>
+      <div>
+        <% if (currentUser.is_admin) { %>
+        <span class="btn btn-primary c-cursor-default">Admin</span>
+        <% } %>
+        <% if (currentUser.is_member) { %>
+        <span class="btn btn-secondary c-cursor-default">Member</span>
+        <% } %>
+      </div>
     </div>
 
     <% if (!currentUser.is_admin) { %>
-    <!-- Grant admin form -->
-    <form action="/users/grant-admin" method="post">
-      <div>
-        <label for="admin_key">Admin Key <sup>*</sup></label>
-        <input type="text" id="admin_key" name="admin_key" placeholder="e.g. Enter admin key" required>
-        <%- include("partials/form-error-msg", {input_name: "admin_key"})%>
-      </div>
-      <button class="btn btn-sm btn-primary" type="submit">Send</button>
-    </form>
-    <% } %>
+    <div class="d-flex flex-column ">
+      <!-- Grant admin form -->
+      <form class="w-100 c-w-md-50 d-flex align-items-end gap-2" action="/users/grant-admin" method="post">
+        <div class="flex-grow-1 flex-shrink-0">
+          <label for="admin_key" class="form-label">Admin Key <sup>*</sup></label>
+          <input type="text" id="admin_key" class="form-control" name="admin_key" placeholder="e.g. Enter admin key" required>
+          <%- include("partials/form-error-msg", {input_name: "admin_key"})%>
+        </div>
+        <button class="btn btn-sm btn-primary flex-grow-0 flex-shrink-1" type="submit">Submit</button>
+      </form>
+      <% } %>
 
-    <% if (!currentUser.is_admin && !currentUser.is_member) { %>
-    <!-- Grant membership form -->
-    <form action="/users/grant-membership" method="post">
-      <div>
-        <label for="member_key">Member Key <sup>*</sup></label>
-        <input type="text" id="member_key" name="member_key" placeholder="e.g. Enter membership key" required>
-        <%- include("partials/form-error-msg", {input_name: "member_key"})%>
-      </div>
-      <button class="btn btn-sm btn-primary" type="submit">Send</button>
-    </form>
-    <% } %>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-</body>
-
-</html>
+      <% if (!currentUser.is_admin && !currentUser.is_member) { %>
+      <!-- Grant membership form -->
+      <form class="w-100 c-w-md-50 d-flex align-items-end gap-2" action="/users/grant-membership" method="post">
+        <div class="flex-grow-1 flex-shrink-0">
+          <label for="member_key" class="form-label">Member Key <sup>*</sup></label>
+          <input type="text" id="member_key" class="form-control" name="member_key" placeholder="e.g. Enter membership key" required>
+          <%- include("partials/form-error-msg", {input_name: "member_key"})%>
+        </div>
+        <button class="btn btn-sm btn-primary flex-grow-0 flex-shrink-1" type="submit">Submit</button>
+      </form>
+      <% } %>
+    </div>
+  </article>
+</main>
+<!-- Footer -->
+<%- include("partials/footer") %>
+<!-- Footer END -->

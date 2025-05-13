@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= statusCode %></title>
-</head>
-
-<body>
-  <h1 class="ms-3">🙈 <%= `${statusCode}: ${message}` %></h1>
-</body>
-
-</html>
+<!-- Header -->
+<%- include("partials/header", {title: statusCode}) %>
+<!-- Header END -->
+<main id="main">
+  <article class="container-lg pt-5 c-pb-64">
+    <h1 class="ms-3">🙈 <%= `${statusCode}: ${message}` %></h1>
+  </article>
+</main>
+<!-- Footer -->
+<%- include("partials/footer") %>
+<!-- Footer END -->
