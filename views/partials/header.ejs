@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+
+  <!-- Bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="min-vh-100 d-flex flex-column" data-bs-theme="dark">
+  <% if (locals.notification) { %>
+  <!-- Notification -->
+  <div class="alert alert-<%= locals.status === 'success' ? 'success' : 'danger' %> alert-dismissible text-center fade show" role="alert">
+    <%=  locals.notification %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <!-- Notification END -->
+  <% } %>
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar bg-dark navbar-expand-lg px-lg-5 bg-body-tertiary" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand lh-1" href="/">
+          <i class="bi bi-file-lock"></i>
+          <span>TOPclubhouse</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end gap-lg-5" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <% if (!currentUser?.is_member) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/profile">Become a Member</a>
+            </li>
+            <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="/posts/create">Say something</a>
+            </li>
+            <% if (!currentUser) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/signup">Signup</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/login">Login</a>
+            </li>
+            <% } %>
+          </ul>
+
+          <% if (currentUser) { %>
+          <ul class="navbar-nav align-items-lg-center">
+            <li class="nav-item d-none d-lg-block">Hi, <%= currentUser?.first_name %></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle fs-5"></i>
+              </a>
+              <ul class="dropdown-menu translate-middle-x">
+                <li><a class="dropdown-item" href="/users/profile">Profile</a></li>
+                <li>
+                  <form action="/auth/logout" method="post">
+                    <button class="dropdown-item">Logout</button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <% } %>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- Hedare END -->
