@@ -55,4 +55,13 @@ router.post(
   postsController.deletePost
 );
 
+// Show post deatils
+router.get(
+  "/:id",
+  isAuth,
+  validatePostParams,
+  postsMiddlewares.getPost,
+  postsController.showPostDetails
+);
+
 module.exports = router;
