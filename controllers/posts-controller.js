@@ -127,6 +127,12 @@ const deletePost = asyncHandler(async (req, res) => {
   res.redirect("/?deletePost=success");
 });
 
+/* ======================== */
+// Delete post
+const showPostDetails = asyncHandler(async (req, res) => {
+  res.render("post-details", { post: req.post, formatDate });
+});
+
 module.exports = {
   showCreatePostForm,
   showAllPosts,
@@ -135,4 +141,5 @@ module.exports = {
   updatePost,
   showDeletePostForm,
   deletePost,
+  showPostDetails,
 };
