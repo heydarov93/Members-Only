@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const postsController = require("../controllers/posts-controller");
+const postsMiddlewares = require("../middlewares/posts-middlewares");
 const { isAuth, isAdmin } = require("../middlewares/auth-middlewares");
 const {
   validatePostSubmission,
@@ -27,6 +28,8 @@ router.get(
   "/update/:id",
   isAuth,
   validatePostParams,
+  postsMiddlewares.getPost,
+  postsMiddlewares.isOwner,
   postsController.showUpdatePostForm
 );
 
@@ -35,6 +38,8 @@ router.post(
   "/update/:id",
   isAuth,
   validatePostParams,
+  postsMiddlewares.getPost,
+  postsMiddlewares.isOwner,
   validatePostSubmission,
   postsController.updatePost
 );
@@ -44,6 +49,8 @@ router.get(
   "/delete/:id",
   isAuth,
   validatePostParams,
+  postsMiddlewares.getPost,
+  postsMiddlewares.isAdminOrOwner,
   postsController.showDeletePostForm
 );
 
@@ -52,6 +59,8 @@ router.post(
   "/delete/:id",
   isAuth,
   validatePostParams,
+  postsMiddlewares.getPost,
+  postsMiddlewares.isAdminOrOwner,
   postsController.deletePost
 );
 
