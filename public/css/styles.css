@@ -51,12 +51,6 @@ img {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-@media (min-width: 48em) {
-  .c-w-md-50 {
-    width: 50% !important;
-  }
-}
-
 /* Padding */
 .c-pb-64 {
   padding-bottom: 4rem !important; /* 64px */
@@ -66,4 +60,16 @@ img {
 
 .c-cursor-default {
   cursor: default !important;
+}
+
+@media (min-width: 48em) {
+  .c-w-md-50 {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 62em) {
+  .c-translate-middle-x {
+    transform: translateX(-50%) !important;
+  }
 }
