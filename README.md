@@ -5,6 +5,8 @@ A members-only message board where users can write anonymous posts, gain members
 > This project was developed as part of The Odin Project's Node.js curriculum, specifically the [Authentication section](https://www.theodinproject.com/lessons/node-path-nodejs-members-only).
 
 **🔴 Live:** [demo link](https://top-clubhouse-server.onrender.com/)
+> [!WARNING] 
+> The live demo may experience downtime as it is hosted on a free service. For guaranteed access, please [run locally](#-run-locally) using the instructions below.
 
 <br>
 
